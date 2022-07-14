@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="images/dollar.png" type="image/png" sizes="16x16" />
+    <title>Payment Success</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css"
+    />
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+  </head>
+  <style>
+    body {
+      background: #dcf0fa;
+    }
+
+    .container {
+      max-width: 380px;
+      margin: 50px auto;
+      overflow: hidden;
+    }
+
+    .printer-top {
+      z-index: 1;
+      border: 6px solid #666666;
+      height: 6px;
+      border-bottom: 0;
+      border-radius: 6px 6px 0 0;
+      background: #333333;
+    }
+
+    .printer-bottom {
+      z-index: 0;
+      border: 6px solid #666666;
+      height: 6px;
+      border-top: 0;
+      border-radius: 0 0 6px 6px;
+      background: #333333;
+    }
+
+    .paper-container {
+      position: relative;
+      overflow: hidden;
+      height: 467px;
+    }
+
+    .paper {
+      background: #ffffff;
+      font-family: "Poppins", sans-serif;
+      height: 447px;
+      position: absolute;
+      z-index: 2;
+      margin: 0 12px;
+      margin-top: -12px;
+      animation: print 5000ms cubic-bezier(0.68, -0.55, 0.265, 0.9) 1;
+      -moz-animation: print 5000ms cubic-bezier(0.68, -0.55, 0.265, 0.9)
+        infinite;
+    }
+
+    .main-contents {
+      margin: 0 12px;
+      padding: 24px;
+    }
+
+    /* // Paper Jagged Edge */
+    .jagged-edge {
+      position: relative;
+      height: 20px;
+      width: 100%;
+      margin-top: -1px;
+    }
+
+    .jagged-edge:after {
+      content: "";
+      display: block;
+      position: absolute;
+      /* //bottom: 20px; */
+      left: 0;
+      right: 0;
+      height: 20px;
+      background: linear-gradient(
+          45deg,
+          transparent 33.333%,
+          #ffffff 33.333%,
+          #ffffff 66.667%,
+          transparent 66.667%
+        ),
+        linear-gradient(
+          -45deg,
+          transparent 33.333%,
+          #ffffff 33.333%,
+          #ffffff 66.667%,
+          transparent 66.667%
+        );
+      background-size: 16px 40px;
+      background-position: 0 -20px;
+    }
+
+    .success-icon {
+      text-align: center;
+      font-size: 48px;
+      height: 72px;
+      background: #359d00;
+      border-radius: 50%;
+      width: 72px;
+      height: 72px;
+      margin: 16px auto;
+      color: #fff;
+    }
+
+    .success-title {
+      font-size: 22px;
+      font-family: "Poppins", sans-serif;
+      text-align: center;
+      color: #666;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+
+    .success-description {
+      font-size: 15px;
+      font-family: "Poppins", sans-serif;
+      line-height: 21px;
+      color: #999;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .order-details {
+      text-align: center;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .order-number-label {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .order-number {
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      line-height: 48px;
+      font-size: 48px;
+      padding: 8px 0;
+      margin-bottom: 24px;
+    }
+
+    .complement {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #32a852;
+    }
+
+    @keyframes print {
+      0% {
+        transform: translateY(-90%);
+      }
+
+      100% {
+        transform: translateY(0%);
+      }
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #section-to-print,
+      #section-to-print * {
+        visibility: visible;
+      }
+      #section-to-print {
+        padding: 100px;
+        margin: 0%;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      .pay-title {
+        font-size: 10rem;
+      }
+
+      .tab-for h5,
+      .sub-title {
+        padding: 40px 0 10px 0;
+        font-size: 4rem;
+        color: rgb(0, 0, 0);
+      }
+
+      .tab-for .amount-title {
+        padding: 20% 0 0 0;
+      }
+
+      #section-to-print .print-btn {
+        visibility: hidden;
+      }
+    }
+  </style>
+
+  <body
+    style="
+      background-image: url('images/donate-image.jpg');
+      background-size: cover;
+    "
+  >
+    <div class="nav-bar">
+      <nav
+        class="navbar navbar-expand-lg bg-transparent"
+        style="
+          background-color: #e57ffcd9;
+          box-shadow: 10px 10px 5px #4d4d4d, 0 0 0.4em rgb(225, 225, 225);
+        "
+      >
+        <div class="container-fluid">
+          <a class="navbar-brand" style="color: white" href="/index.html"
+            >Sahil Mandhare</a
+          >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="navbar-button">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    style="color: black"
+                    aria-current="page"
+                    href="/index.html"
+                    >Home</a
+                  >
+                </li>
+                <li class="nav-item active">
+                  <a
+                    class="nav-link"
+                    style="color: black"
+                    aria-current="page"
+                    href="/about.html"
+                    >About Us</a
+                  >
+                </li>
+                <li class="nav-item active">
+                  <a
+                    class="nav-link"
+                    style="color: black"
+                    aria-current="page"
+                    href="/contact.html"
+                    >Contact Us</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="payment" id="payment">
+      <div class="payment-body" id="section-to-print">
+        <h3 class="pay-title text-center">Thanks for Donate!!</h3>
+        <br /><br />
+        <div class="d-flex flex-column">
+          <div class="tab-for d-flex my-3">
+            <h5 class="amount-title">Amount :</h5>
+            <label for="amount" class="amount amount-title sub-title"
+              >amount</label
+            >
+          </div>
+          <div class="tab-for d-flex my-3">
+            <h5>NAME ON CARD :</h5>
+            <label for="card-name" class="cardName sub-title">card-name</label>
+          </div>
+          <div class="tab-for d-flex my-3">
+            <h5>CARD NUMBER :</h5>
+            <label for="card-no" class="cardNo sub-title">card-no</label>
+          </div>
+          <div class="transaction">
+            <div class="tab-for d-flex my-3">
+              <h5>EXPIRATION :</h5>
+              <label class="d-flex expMonthAndYear sub-title" for="expMonth"
+                >expMonth to expYear</label
+              >
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+        <button class="confirm-btn mt-3 print-btn" onclick="window.print()">
+          Print
+        </button>
+      </div>
+    </div>
+
+    <div class="container print-container">
+      <div class="printer-top"></div>
+
+      <div class="paper-container">
+        <div class="printer-bottom"></div>
+
+        <div class="paper">
+          <div class="main-contents">
+            <div class="success-icon">&#10004;</div>
+            <div class="success-title">Payment Complete</div>
+            <div class="success-description">
+              Thank you for completing the payment! You will shortly receive an
+              email of your payment.
+            </div>
+            <div class="order-details">
+              <div class="order-number-label">Transaction ID</div>
+              <div class="order-number">123456789</div>
+              <div class="complement">Thank You!</div>
+            </div>
+          </div>
+          <div class="jagged-edge"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer id="footer">
+      <div class="footer-link white-section">
+        <a href="#">
+          <i class="bi bi-linkedin fs-5"></i>
+        </a>
+        <a href="#">
+          <i class="bi bi-github fs-5"></i>
+        </a>
+        <a href="#">
+          <i class="bi bi-instagram fs-5"></i>
+        </a>
+        <a href="#">
+          <i class="bi bi-envelope-fill fs-5"></i>
+        </a>
+      </div>
+      <p>© Copyright 2022 Sahil Mandhare</p>
+    </footer>
+  </body>
+  <script>
+    $(".payment").addClass("hidden");
+    setTimeout(() => {
+      $(".container").addClass("hidden");
+      $(".payment").addClass("active");
+    }, 6000);
+
+    let amount = localStorage.getItem("amount");
+    let cardName = localStorage.getItem("cardName");
+    let cardNo = localStorage.getItem("cardNo");
+    let expMonth = localStorage.getItem("expMonth");
+    let expYear = localStorage.getItem("expYear");
+
+    $(".amount").html(amount);
+    $(".cardName").html(cardName);
+    $(".cardNo").html(cardNo);
+    $(".expMonthAndYear").html(expMonth + " - " + expYear);
+  </script>
+</html>
